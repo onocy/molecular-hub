@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 // Material helpers
 import { withStyles } from '@material-ui/core';
 
-import { PlayArrow as Play_Icon, Edit } from '@material-ui/icons';
+import { PlayArrow as PlayIcon, Edit } from '@material-ui/icons';
 
 
 // Material components
@@ -145,7 +145,7 @@ class OrdersTable extends Component {
                       </TableCell>
                       <TableCell>
                         <Button color = "default">
-                          <Play_Icon style={{ color: 'green' }}/>
+                          <PlayIcon style={{ color: 'green' }}/>
                         </Button>
                       </TableCell>
                       <TableCell>

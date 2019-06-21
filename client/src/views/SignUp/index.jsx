@@ -14,7 +14,6 @@ import { withStyles } from '@material-ui/core';
 // Material components
 import {
   Button,
-  Checkbox,
   CircularProgress,
   Grid,
   IconButton,
@@ -68,12 +67,13 @@ class SignUp extends Component {
   };
 
   resetValues() {
-    this.state.values = {
+    this.setState ({
+      isLoading: false,
       firstName: '',
       lastName: '',
       email: '',
       password: '',
-    }
+    });
   }
 
   handleBack = () => {
@@ -112,16 +112,25 @@ class SignUp extends Component {
 
       axios
         .post('sign-up', {
-          firstName: this.state.firstName,
-          lastName: this.state.lastName,
-          email: this.state.email,
-          password: this.state.password
+          firstName: this.state.values.firstName,
+          lastName: this.state.values.lastName,
+          email: this.state.values.email,
+          password: this.state.values.password
         })
         .then(res => {
           if (res.status === 200) {
-              if (res.data === '') {
+            console.log('res.data:', res.data)
+              if (res.data === "User Created") {
+                console.log('User Created');
+                this.resetValues();
+                history.push('/dashboard');
               } 
-              else {
+              else if (res.data === "User Exists"){
+                this.setState({
+                  errors: {
+                    email: 'A user already exists with this email.'
+                  }
+                })
                 this.resetValues(); 
               }
           } else {

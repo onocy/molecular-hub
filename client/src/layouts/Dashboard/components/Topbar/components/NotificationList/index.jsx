@@ -22,10 +22,6 @@ import {
 // Material icons
 import {
   ArrowForwardIos as ArrowForwardIosIcon,
-  Payment as PaymentIcon,
-  PeopleOutlined as PeopleIcon,
-  Code as CodeIcon,
-  Store as StoreIcon, 
   PlaylistAddCheck as PlaylistAddIcon, 
   PlaylistAdd as PlaylistIcon,
   DonutLarge as DonutIcon

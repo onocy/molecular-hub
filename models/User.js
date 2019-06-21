@@ -8,7 +8,7 @@ let SALT = 10;
 const userSchema = new Schema ({
     firstName: {
         type: String,
-        unique: false 
+        unique: false
     },
     lastName: {
         type: String, 

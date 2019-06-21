@@ -86,19 +86,17 @@ class SignIn extends Component {
 
       axios
         .post('sign-in', {
-          email: this.state.email,
-          password: this.state.password
+          email: this.state.values.email,
+          password: this.state.values.password
         })
         .then(res => {
           if (res.status === 200) {
-            console.log('here');
-            console.log(res);
             if (res.data === "Logged In"){
               localStorage.setItem('isAuthenticated', true);
-              history.push('/dashboard');
+              history.push('/dashboard')
             } else if (res.data === "Wrong Password"){
               localStorage.setItem('isAuthenticated', false);
-                this.setState({
+                this.setState({ 
                   isLoading: false, 
                   values: {
                     email: '',
