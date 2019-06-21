@@ -42,6 +42,7 @@ app.use(passport.session());
 
 app.post('/sign-up', (req, res) => {
     const { firstName, lastName, email, password } = req.body
+    console.log(req.body);
     User.findOne({ email }, (err, user) => {
         if (err) { console.log('Post Error: ', err) }
         else if (user) { res.json({ error: `A user already exists with email: ${email}` }) }

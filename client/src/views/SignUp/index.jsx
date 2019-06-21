@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -35,16 +36,13 @@ import schema from './schema';
 
 validate.validators.checked = validators.checked;
 
-// Service methods
-const signUp = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 1500);
-  });
-};
 
 class SignUp extends Component {
+  constructor(){
+    super();
+    this.resetValues = this.resetValues.bind(this);
+  }
+
   state = {
     values: {
       firstName: '',
@@ -68,6 +66,15 @@ class SignUp extends Component {
     isLoading: false,
     submitError: null
   };
+
+  resetValues() {
+    this.state.values = {
+      firstName: '',
+      lastName: '',
+      email: '',
+      password: '',
+    }
+  }
 
   handleBack = () => {
     const { history } = this.props;
@@ -100,18 +107,29 @@ class SignUp extends Component {
   handleSignUp = async () => {
     try {
       const { history } = this.props;
-      const { values } = this.state;
 
       this.setState({ isLoading: true });
 
-      await signUp({
-        firstName: values.firstName,
-        lastName: values.lastName,
-        email: values.email,
-        password: values.password
-      });
-
-      history.push('/sign-in');
+      axios
+        .post('sign-up', {
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          password: this.state.password
+        })
+        .then(res => {
+          if (res.status === 200) {
+              if (res.data === '') {
+              } 
+              else {
+                this.resetValues(); 
+              }
+          } else {
+            this.resetValues(); 
+          }
+        }).catch(err => {
+          console.log(err);
+        })
     } catch (error) {
       this.setState({
         isLoading: false,
@@ -139,7 +157,7 @@ class SignUp extends Component {
       touched.email && errors.email ? errors.email[0] : false;
     const showPasswordError =
       touched.password && errors.password ? errors.password[0] : false;
- 
+
 
     return (
       <div className={classes.root}>
@@ -148,7 +166,7 @@ class SignUp extends Component {
             <div className={classes.quote}>
               <div className={classes.quoteInner}>
                 <Typography className={classes.quoteText} variant="h1">
-                    Molecular Hub
+                  Molecular Hub
                 </Typography>
               </div>
             </div>
@@ -244,16 +262,16 @@ class SignUp extends Component {
                   {isLoading ? (
                     <CircularProgress className={classes.progress} />
                   ) : (
-                    <Button
-                      className={classes.signUpButton}
-                      color="primary"
-                      disabled={!isValid}
-                      onClick={this.handleSignUp}
-                      size="large"
-                      variant="contained">
-                      Sign up now
+                      <Button
+                        className={classes.signUpButton}
+                        color="primary"
+                        disabled={!isValid}
+                        onClick={this.handleSignUp}
+                        size="large"
+                        variant="contained">
+                        Sign up now
                     </Button>
-                  )}
+                    )}
                   <Typography className={classes.signIn} variant="body1">
                     Have an account?{' '}
                     <Link className={classes.signInUrl} to="/sign-in">
