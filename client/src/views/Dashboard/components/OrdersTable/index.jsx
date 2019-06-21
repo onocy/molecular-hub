@@ -107,7 +107,6 @@ class OrdersTable extends Component {
           <PortletToolbar>
             <Button
               className={classes.newEntryButton}
-              color="danger"
               size="small"
               variant="outlined">
               New Playlist
@@ -126,8 +125,8 @@ class OrdersTable extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">Name</TableCell>
-                    <TableCell align=""></TableCell>
-                    <TableCell align=""></TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
                     <TableCell align="left">Date Created</TableCell>
                     <TableCell align="left">Schedule Time</TableCell>
                     <TableCell align="left">Status</TableCell>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import axios from 'axios';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -29,14 +30,6 @@ import styles from './styles';
 // Form validation schema
 import schema from './schema';
 
-// Service methods
-const signIn = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 1500);
-  });
-};
 
 class SignIn extends Component {
   state = {
@@ -88,15 +81,50 @@ class SignIn extends Component {
   handleSignIn = async () => {
     try {
       const { history } = this.props;
-      const { values } = this.state;
 
       this.setState({ isLoading: true });
 
-      await signIn(values.email, values.password);
-
-      localStorage.setItem('isAuthenticated', true);
-
-      history.push('/dashboard');
+      axios
+        .post('sign-in', {
+          email: this.state.email,
+          password: this.state.password
+        })
+        .then(res => {
+          if (res.status === 200) {
+            console.log('here');
+            console.log(res);
+            if (res.data === "Logged In"){
+              localStorage.setItem('isAuthenticated', true);
+              history.push('/dashboard');
+            } else if (res.data === "Wrong Password"){
+              localStorage.setItem('isAuthenticated', false);
+                this.setState({
+                  isLoading: false, 
+                  values: {
+                    email: '',
+                    password: ''
+                  },
+                  errors: {
+                    password: 'Incorrect Password'
+                  }
+                })
+            } else if (res.data === "User Not Found"){
+              localStorage.setItem('isAuthenticated', false);
+                this.setState({
+                  isLoading: false, 
+                  values: {
+                    email: '',
+                    password: ''
+                  },
+                  errors: {
+                    email: 'Incorrect Email'
+                  }
+                })
+              }
+            }
+        }).catch(err => {
+          console.log(err);
+        })
     } catch (error) {
       this.setState({
         isLoading: false,
@@ -126,7 +154,7 @@ class SignIn extends Component {
             <div className={classes.quote}>
               <div className={classes.quoteInner}>
                 <Typography className={classes.quoteText} variant="h1">
-                    Molecular Hub
+                  Molecular Hub
                 </Typography>
               </div>
             </div>
@@ -161,7 +189,7 @@ class SignIn extends Component {
                       <Typography
                         className={classes.fieldError}
                         variant="body2">
-                        {errors.email[0]}
+                        {errors.email}
                       </Typography>
                     )}
                     <TextField
@@ -179,7 +207,7 @@ class SignIn extends Component {
                       <Typography
                         className={classes.fieldError}
                         variant="body2">
-                        {errors.password[0]}
+                        {errors.password}
                       </Typography>
                     )}
                   </div>
@@ -191,16 +219,16 @@ class SignIn extends Component {
                   {isLoading ? (
                     <CircularProgress className={classes.progress} />
                   ) : (
-                    <Button
-                      className={classes.signInButton}
-                      color="primary"
-                      disabled={!isValid}
-                      onClick={this.handleSignIn}
-                      size="large"
-                      variant="contained">
-                      Sign in now
+                      <Button
+                        className={classes.signInButton}
+                        color="primary"
+                        disabled={!isValid}
+                        onClick={this.handleSignIn}
+                        size="large"
+                        variant="contained">
+                        Sign in now
                     </Button>
-                  )}
+                    )}
                   <Typography className={classes.signUp} variant="body1">
                     Don't have an account?{' '}
                     <Link className={classes.signUpUrl} to="/sign-up">

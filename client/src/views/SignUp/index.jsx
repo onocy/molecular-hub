@@ -51,21 +51,18 @@ class SignUp extends Component {
       lastName: '',
       email: '',
       password: '',
-      policy: false
     },
     touched: {
       firstName: false,
       lastName: false,
       email: false,
       password: false,
-      policy: null
     },
     errors: {
       firstName: null,
       lastName: null,
       email: null,
       password: null,
-      policy: null
     },
     isValid: false,
     isLoading: false,

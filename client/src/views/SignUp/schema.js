@@ -24,8 +24,4 @@ export default {
       maximum: 128
     }
   },
-  policy: {
-    presence: { allowEmpty: false, message: 'is required' },
-    checked: true
-  }
 };
