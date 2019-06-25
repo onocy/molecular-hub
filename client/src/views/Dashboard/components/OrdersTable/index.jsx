@@ -25,6 +25,7 @@ import {
 
 // Shared services
 import { getOrders } from 'services/order';
+import { newPlaylist } from 'services/playlist';
 
 // Shared components
 import {
@@ -33,7 +34,7 @@ import {
   PortletLabel,
   PortletToolbar,
   PortletContent,
-  Status
+  Status, 
 } from 'components';
 
 // Component styles
@@ -50,16 +51,40 @@ class OrdersTable extends Component {
 
   state = {
     isLoading: false,
-    limit: 10,
     orders: [],
     ordersTotal: 0
   };
 
-  async getOrders(limit) {
+  async newPlaylist() {
     try {
       this.setState({ isLoading: true });
 
-      const { orders, ordersTotal } = await getOrders(limit);
+      await newPlaylist();
+
+      const { orders, ordersTotal } = await getOrders();
+
+      if (this.signal) {
+        this.setState({
+          isLoading: false,
+          orders,
+          ordersTotal
+        });
+      }
+    } catch (error) {
+      if (this.signal) {
+        this.setState({
+          isLoading: false,
+          error
+        });
+      }
+    }
+  }
+
+  async getOrders() {
+    try {
+      this.setState({ isLoading: true });
+
+      const { orders, ordersTotal } = await getOrders();
 
       if (this.signal) {
         this.setState({
@@ -81,9 +106,7 @@ class OrdersTable extends Component {
   componentDidMount() {
     this.signal = true;
 
-    const { limit } = this.state;
-
-    this.getOrders(limit);
+    this.getOrders();
   }
 
   componentWillUnmount() {
@@ -108,6 +131,7 @@ class OrdersTable extends Component {
             <Button
               className={classes.newEntryButton}
               size="small"
+              onClick = {newPlaylist}
               variant="outlined">
               New Playlist
             </Button>
@@ -136,7 +160,7 @@ class OrdersTable extends Component {
                   {orders.map(order => (
                     <TableRow className={classes.tableRow} hover key={order.id}>
                       <TableCell className={classes.customerCell}>
-                        {order.customer.name}
+                        {order.name}
                       </TableCell>
                       <TableCell>
                         <Button color = "default">

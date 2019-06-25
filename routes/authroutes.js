@@ -1,9 +1,9 @@
-const User = require('../models/User');
+const { File, Molecule, Playlist, User } = require('../models/Models');
 const bcrypt = require('bcrypt');
 
 
 module.exports = app => {
-        app.post('/sign-up', (req, res) => {
+    app.post('/sign-up', (req, res) => {
         const { firstName, lastName, email, password } = req.body
         User.findOne({ email }, (err, user) => {
             if (err) { console.log('Post Error: ', err) }
@@ -26,22 +26,16 @@ module.exports = app => {
     });
 
     app.post('/sign-in', (req, res) => {
-        console.log('...')
-        console.log('signing in');
-        console.log('req', req);
-        console.log('req body', req.body);
-        User.findOne({'email': req.body.email}, (err, user) => {
-            if(!user) {
+        console.log('Signing in with req body: ', req.body);
+        User.findOne({ 'email': req.body.email }, (err, user) => {
+            if (!user) {
                 res.json('User Not Found');
-                console.log('not found');
             }
-            else{
-                console.log('req pass', req.body.password);
-                console.log('user pass', user.password);
+            else {
                 bcrypt.compare(req.body.password, user.password, (err, match) => {
-                    if(err) {console.log('Comparison error: ', err)}
-                    if(match) {
-                        // res.redirect('/dashboard')
+                    if (err) { console.log('Comparison error: ', err) }
+                    if (match) {
+                        // Redirect to Login page
                         return res.json('Logged In')
                     } else {
                         return res.json('Wrong Password')
