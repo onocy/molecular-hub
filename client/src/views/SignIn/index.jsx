@@ -91,6 +91,7 @@ class SignIn extends Component {
         })
         .then(res => {
           if (res.status === 200) {
+            console.log('res', res);
             if (res.data === "Logged In"){
               localStorage.setItem('isAuthenticated', true);
               history.push('/dashboard')

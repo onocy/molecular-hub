@@ -21,7 +21,6 @@ import {
 // Material icons
 import {
   DashboardOutlined as DashboardIcon,
-  PeopleOutlined as PeopleIcon,
   ShoppingBasketOutlined as ShoppingBasketIcon,
 } from '@material-ui/icons';
 

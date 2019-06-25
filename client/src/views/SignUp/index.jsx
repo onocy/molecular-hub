@@ -78,7 +78,6 @@ class SignUp extends Component {
 
   handleBack = () => {
     const { history } = this.props;
-
     history.goBack();
   };
 
@@ -118,24 +117,22 @@ class SignUp extends Component {
           password: this.state.values.password
         })
         .then(res => {
-          if (res.status === 200) {
-            console.log('res.data:', res.data)
-              if (res.data === "User Created") {
-                console.log('User Created');
-                this.resetValues();
-                history.push('/dashboard');
-              } 
-              else if (res.data === "User Exists"){
-                this.setState({
-                  errors: {
-                    email: 'A user already exists with this email.'
-                  }
-                })
-                this.resetValues(); 
+          if (res.status === 201) {
+              console.log('User Created');
+              this.resetValues();
+              history.push('/dashboard');
+          }
+          else if (res.status === 403){
+            this.setState({
+              errors: {
+                email: 'A user already exists with this email.'
               }
-          } else {
+            })
             this.resetValues(); 
           }
+          else {
+            this.resetValues(); 
+          } 
         }).catch(err => {
           console.log(err);
         })

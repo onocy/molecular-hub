@@ -1,7 +1,3 @@
-// Mock data
-import orders from 'data/orders';
-import users from 'data/users';
-
 export const getOrders = async () => {
   const playlists = await fetch('/playlists');
   const result = await playlists.json();
