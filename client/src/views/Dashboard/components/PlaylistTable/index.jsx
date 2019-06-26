@@ -101,7 +101,7 @@ class PlaylistTable extends Component {
         });
       }
     }
-    this.setState(this.state)
+    this.setState(this.state);
   }
 
   componentDidMount() {
