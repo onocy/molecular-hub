@@ -24,8 +24,7 @@ import {
 } from '@material-ui/core';
 
 // Shared services
-import { getOrders } from 'services/order';
-import { newPlaylist } from 'services/playlist';
+import { getPlaylists, newPlaylist } from 'services/playlist';
 
 // Shared components
 import {
@@ -46,13 +45,13 @@ const statusColors = {
   waiting: 'danger'
 };
 
-class OrdersTable extends Component {
+class PlaylistTable extends Component {
   signal = false;
 
   state = {
     isLoading: false,
-    orders: [],
-    ordersTotal: 0
+    playlists: [],
+    playlistsTotal: 0
   };
 
   async newPlaylist() {
@@ -61,13 +60,13 @@ class OrdersTable extends Component {
 
       await newPlaylist();
 
-      const { orders, ordersTotal } = await getOrders();
+      const { playlists, playlistsTotal } = await getPlaylists();
 
       if (this.signal) {
         this.setState({
           isLoading: false,
-          orders,
-          ordersTotal
+          playlists,
+          playlistsTotal
         });
       }
     } catch (error) {
@@ -79,18 +78,19 @@ class OrdersTable extends Component {
       }
     }
   }
+  
 
-  async getOrders() {
+  async getPlaylists() {
     try {
       this.setState({ isLoading: true });
-
-      const { orders, ordersTotal } = await getOrders();
-
+      
+      const { playlists, playlistsTotal } = await getPlaylists();
+      
       if (this.signal) {
         this.setState({
           isLoading: false,
-          orders,
-          ordersTotal
+          playlists,
+          playlistsTotal
         });
       }
     } catch (error) {
@@ -101,12 +101,12 @@ class OrdersTable extends Component {
         });
       }
     }
+    this.setState(this.state)
   }
 
   componentDidMount() {
     this.signal = true;
-
-    this.getOrders();
+    this.getPlaylists();
   }
 
   componentWillUnmount() {
@@ -115,23 +115,23 @@ class OrdersTable extends Component {
 
   render() {
     const { classes, className } = this.props;
-    const { isLoading, orders, ordersTotal } = this.state;
+    const { isLoading, playlists, playlistsTotal } = this.state;
 
     const rootClassName = classNames(classes.root, className);
-    const showOrders = !isLoading && orders.length > 0;
+    const showPlaylists = !isLoading && playlistsTotal > 0;
 
     return (
       <Portlet className={rootClassName}>
         <PortletHeader noDivider>
           <PortletLabel
-            subtitle={`${ordersTotal} in total`}
+            subtitle={`${playlistsTotal} in total`}
             title="Playlists"
           />
           <PortletToolbar>
             <Button
               className={classes.newEntryButton}
               size="small"
-              onClick = {newPlaylist}
+              onClick={newPlaylist}
               variant="outlined">
               New Playlist
             </Button>
@@ -144,7 +144,7 @@ class OrdersTable extends Component {
                 <CircularProgress />
               </div>
             )}
-            {showOrders && (
+            {showPlaylists && (
               <Table>
                 <TableHead>
                   <TableRow>
@@ -157,7 +157,7 @@ class OrdersTable extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {orders.map(order => (
+                  {playlists.map(order => (
                     <TableRow className={classes.tableRow} hover key={order.id}>
                       <TableCell className={classes.customerCell}>
                         {order.name}
@@ -200,9 +200,9 @@ class OrdersTable extends Component {
   }
 }
 
-OrdersTable.propTypes = {
+PlaylistTable.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(OrdersTable);
+export default withStyles(styles)(PlaylistTable);

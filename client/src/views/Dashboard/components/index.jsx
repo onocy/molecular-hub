@@ -1,1 +1,2 @@
-export { default as OrdersTable } from './OrdersTable';
+export { default as PlaylistTable } from './PlaylistTable';
+// export { default as EditPlaylist } from './EditPlaylist';

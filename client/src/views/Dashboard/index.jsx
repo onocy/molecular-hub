@@ -14,7 +14,7 @@ import { Dashboard as DashboardLayout } from 'layouts';
 
 // Custom components
 import {
-  OrdersTable
+  PlaylistTable
 } from './components';
 
 // Component styles
@@ -36,7 +36,7 @@ class Dashboard extends Component {
         <div className={classes.root}>
           <Grid container spacing={4}>
             <Grid item lg={12} md={12} xl={12} xs={12}>
-              <OrdersTable className={classes.item} />
+              <PlaylistTable className={classes.item} />
             </Grid>
           </Grid>
         </div>
