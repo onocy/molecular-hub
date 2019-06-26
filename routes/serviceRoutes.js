@@ -10,17 +10,17 @@ module.exports = app => {
                 throw err;
             }
             files.forEach(filePath => {
-                let currFile = file.split('\\').pop().split('.')[0]
+                let currFile = filePath.split('\\').pop().split('.')
                 let newFile = new File({data: Buffer.from(filePath), name: currFile[0], contentType: currFile[1]})
                 newFile.save((err, savedFile) => {
                     if(err) console.log(err);
                     else { 
                         console.log('File Created')
-                        console.log(savedFile)
+                        console.log(newFile)
                     };
                 });
             })
-            res.json(data);
+            res.json(files);
         });
     })
 
@@ -38,6 +38,16 @@ module.exports = app => {
     app.get('/receive-file',  (req, res) => {
         const id = '5d114fca9ac89a0ed88257da';
         File.findById(id, (err, file) => {
+            if(err) console.log(err);
+            else {
+                res.send(file);
+            }
+        });
+    })
+
+    app.get('/receive-files',  (req, res) => {
+        const result = [];
+        File.find({}, (err, file) => {
             if(err) console.log(err);
             else {
                 res.send(file);
