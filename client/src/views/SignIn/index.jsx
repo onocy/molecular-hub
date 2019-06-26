@@ -32,23 +32,36 @@ import schema from './schema';
 
 
 class SignIn extends Component {
-  state = {
-    values: {
+
+  constructor() {
+    super();
+    this.resetValues = this.resetValues.bind(this);
+    this.state = {
+      values: {
+        email: '',
+        password: ''
+      },
+      touched: {
+        email: false,
+        password: false
+      },
+      errors: {
+        email: null,
+        password: null
+      },
+      isValid: false,
+      isLoading: false,
+      submitError: null
+    };
+  }
+
+  resetValues() {
+    this.setState({
+      isLoading: false,
       email: '',
-      password: ''
-    },
-    touched: {
-      email: false,
-      password: false
-    },
-    errors: {
-      email: null,
-      password: null
-    },
-    isValid: false,
-    isLoading: false,
-    submitError: null
-  };
+      password: '',
+    });
+  }
 
   handleBack = () => {
     const { history } = this.props;
@@ -81,56 +94,40 @@ class SignIn extends Component {
   handleSignIn = async () => {
     try {
       const { history } = this.props;
-
       this.setState({ isLoading: true });
 
-      axios
-        .post('sign-in', {
-          email: this.state.values.email,
-          password: this.state.values.password
-        })
+      axios.post('sign-in', {
+        email: this.state.values.email,
+        password: this.state.values.password
+      })
         .then(res => {
-          if (res.status === 200) {
-            console.log('res', res);
-            if (res.data === "Logged In"){
+          switch (res.status) {
+            case 200:
               localStorage.setItem('isAuthenticated', true);
-              history.push('/dashboard')
-            } else if (res.data === "Wrong Password"){
+              history.push({pathname: '/dashboard'});
+              break;
+            case 401:
               localStorage.setItem('isAuthenticated', false);
-                this.setState({ 
-                  isLoading: false, 
-                  values: {
-                    email: '',
-                    password: ''
-                  },
-                  errors: {
-                    password: 'Incorrect Password'
-                  }
-                })
-            } else if (res.data === "User Not Found"){
+              this.resetValues();
+              this.setState({ errors: { password: 'Incorrect Password' } });
+              break;
+            case 404:
               localStorage.setItem('isAuthenticated', false);
-                this.setState({
-                  isLoading: false, 
-                  values: {
-                    email: '',
-                    password: ''
-                  },
-                  errors: {
-                    email: 'Incorrect Email'
-                  }
-                })
-              }
-            }
-        }).catch(err => {
-          console.log(err);
-        })
+              this.resetValues();
+              this.setState({ errors: { password: 'Incorrect Email' } });
+              break;
+            default: 
+              this.resetValues(); 
+              this.setState({serviceError: 'Try Again'})
+          }
+        });
     } catch (error) {
       this.setState({
         isLoading: false,
         serviceError: error
       });
     }
-  };
+  }
 
   render() {
     const { classes } = this.props;

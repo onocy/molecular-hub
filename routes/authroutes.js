@@ -21,6 +21,7 @@ module.exports = app => {
                         const newUser = new User({ firstName, lastName, email, password: hash_password });
                         newUser.save((err, savedUser) => {
                             if (err) return res.json(err)
+                            req.session.id = savedUser._id;
                             res.status(201).json(savedUser)
                         })
                     });
@@ -41,6 +42,7 @@ module.exports = app => {
                 bcrypt.compare(req.body.password, user.password, (err, match) => {
                     if (err) { console.log('Comparison error: ', err) }
                     if (match) {
+                        req.session.id = user._id;
                         return res.status(200).json(user);
                     } else {
                         return res.status(401).json('Wrong Password')
@@ -49,4 +51,13 @@ module.exports = app => {
             }
         });
     });
+
+
+    app.post('/sign-out', (req, res) => {
+        req.session.destroy(err => {
+            if (err) { console.log(err) }
+            res.clearCookie('sid');
+            res.redirect('/');
+        })
+    }); 
 };
