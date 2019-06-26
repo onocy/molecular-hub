@@ -5,7 +5,7 @@ const keys = require('./config/keys');
 
 const app = express();
 
-const port = process.env.PORT || 3002;
+const port = process.env.PORT || 3001;
 
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true }).then(console.log('dbconnected'));
 
