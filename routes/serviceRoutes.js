@@ -2,19 +2,23 @@ const { File, Molecule, Playlist, User } = require('../models/Models');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
+const { filewalker } = require('./helpers')
 
 module.exports = app => {
+
+    // ---------------- FILES ---------------------
+
     app.get('/create-files', (req, res) => {
-        filewalker('./assets/molecules', function(err, files){
-            if(err){
+        filewalker('./assets/molecules', function (err, files) {
+            if (err) {
                 throw err;
             }
             files.forEach(filePath => {
                 let currFile = filePath.split('\\').pop().split('.')
-                let newFile = new File({data: Buffer.from(filePath), name: currFile[0], contentType: currFile[1]})
+                let newFile = new File({ data: Buffer.from(filePath), name: currFile[0], contentType: currFile[1] })
                 newFile.save((err, savedFile) => {
-                    if(err) console.log(err);
-                    else { 
+                    if (err) console.log(err);
+                    else {
                         console.log('File Created')
                         console.log(newFile)
                     };
@@ -24,77 +28,99 @@ module.exports = app => {
         });
     })
 
-    app.post('/create-file', (req, res) => {
-        const file = new File({data: Buffer.from('../assets/molecules/amino_acids/ala.mol'), name: 'ala', contentType: '.mol'});
+    app.post('/file', (req, res) => {
+        const file = new File({ data: Buffer.from('../assets/molecules/amino_acids/ala.mol'), name: 'ala', contentType: '.mol' });
         file.save((err, savedFile) => {
-            if(err) console.log(err);
-            else { 
+            if (err) console.log(err);
+            else {
                 console.log('File Created')
-                res.send(savedFile); 
+                res.send(savedFile);
             };
         });
     })
-    
-    app.get('/receive-file',  (req, res) => {
+
+    app.get('/file', (req, res) => {
         const id = '5d114fca9ac89a0ed88257da';
         File.findById(id, (err, file) => {
-            if(err) console.log(err);
+            if (err) console.log(err);
             else {
                 res.send(file);
             }
         });
     })
 
-    app.get('/receive-files',  (req, res) => {
+    app.get('/filenames', (req, res) => {
         const result = [];
         File.find({}, (err, file) => {
-            if(err) console.log(err);
+            if (err) console.log(err);
             else {
-                res.send(file);
+                console.log('file_length', file.length);
+                console.log(typeof (file));
+                file.forEach(f => {
+                    result.push({ name: f.name, contentType: f.contentType });
+                })
+                res.json(result);
             }
         });
+    })
+
+    app.get('/files', (req, res) => {
+        File.find({}, (err, file) => {
+            if (err) console.log(err);
+            else {
+                res.json(file);
+            }
+        });
+    })
+
+    // ---------------- PLAYLISTS ---------------------
+    
+    app.get('/playlist', (req, res) => {
+        Playlist.find({_id: req.body.id}, (err, playlist) => {
+            if (err) console.log(err);
+            if (playlist) { res.json(playlist) }
+            else { res.json('Not Found')}
+        })
     })
 
     app.get('/playlists', (req, res) => {
         Playlist.find({}, (err, playlists) => {
-            if(err) console.log(err);
+            if (err) console.log(err);
             res.json(playlists);
         })
     })
-    
+
     app.post('/playlist', (req, res) => {
-        const curr_date = new Date(); 
-        const newPlaylist = new Playlist({displayInterval: 2000, name: 'newPlaylist', createdAt: curr_date, status: 'queued'});
+        const curr_date = new Date();
+        const newPlaylist = new Playlist({ displayInterval: 2000, name: 'newPlaylist', createdAt: curr_date, status: 'queued' });
         newPlaylist.save((err, savedPlaylist) => {
-            if(err) console.log(err);
+            if (err) console.log(err);
             console.log('playlist saved');
             res.send(savedPlaylist);
         })
     });
 
+    app.delete('/playlist', (req, res) => {
+        console.log('attempting delete')
+        Playlist.remove({ _id: req.body.id }, (err, playlists) => {
+            if (err) console.log(err);
+            res.status(200).send('Removed');
+        })
+    });
 
-    function filewalker(dir, done) {
-        let results = [];
+    // ---------------- MOLECULES ---------------------  
     
-        fs.readdir(dir, function(err, list) {
-            if (err) return done(err);
-            var pending = list.length;
-            if (!pending) return done(null, results);
-            list.forEach(function(file){
-                file = path.resolve(dir, file);
-                fs.stat(file, function(err, stat){
-                    if (stat && stat.isDirectory()) {
-                        // results.push(file);
-                        filewalker(file, function(err, res){
-                            results = results.concat(res);
-                            if (!--pending) done(null, results);
-                        });
-                    } else {
-                        results.push(file);
-                        if (!--pending) done(null, results);
-                    }
-                });
-            });
+    
+    app.get('./create-molecules', (req, res) => {
+        const mol_dict = {}
+        File.find({}, (err, file) => {
+            if (err) console.log(err);
+            else {
+                file.forEach(f => {
+                    
+                })
+            }
         });
-    };
+    });
+
 };

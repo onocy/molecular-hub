@@ -33,3 +33,16 @@ import {
     PortletContent,
     Status, 
   } from 'components';
+
+
+class EditPlaylist extends Component {
+  constructor() {
+
+  }
+
+  render(){
+    return (
+      <h1>EditTable</h1>
+    )
+  }
+}

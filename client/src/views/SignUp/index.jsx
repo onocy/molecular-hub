@@ -40,31 +40,31 @@ class SignUp extends Component {
   constructor(){
     super();
     this.resetValues = this.resetValues.bind(this);
+    this.state = {
+      values: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+      },
+      touched: {
+        firstName: false,
+        lastName: false,
+        email: false,
+        password: false,
+      },
+      errors: {
+        firstName: null,
+        lastName: null,
+        email: null,
+        password: null,
+      },
+      isValid: false,
+      isLoading: false,
+      submitError: null
+    };
   }
 
-  state = {
-    values: {
-      firstName: '',
-      lastName: '',
-      email: '',
-      password: '',
-    },
-    touched: {
-      firstName: false,
-      lastName: false,
-      email: false,
-      password: false,
-    },
-    errors: {
-      firstName: null,
-      lastName: null,
-      email: null,
-      password: null,
-    },
-    isValid: false,
-    isLoading: false,
-    submitError: null
-  };
 
   resetValues() {
     this.setState ({
