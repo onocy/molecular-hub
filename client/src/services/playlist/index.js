@@ -8,7 +8,7 @@ const getPlaylists = async () => {
 };
 
 const newPlaylist = async () => {
-  const playlists = await fetch('/playlist', {method: 'POST'});
+  const playlists = await fetch('/gen-playlist', {method: 'POST'});
   console.log(playlists);
 };
 

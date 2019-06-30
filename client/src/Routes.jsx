@@ -9,7 +9,6 @@ import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
-import Test from './views/Test';
 
 
 export default class Routes extends Component {

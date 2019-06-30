@@ -14,12 +14,23 @@ module.exports = app => {
             if (err) console.log(err);
             else {
                 file.forEach(f => {
-                    console.log(f)
-                    mol_dict[f] = f
+                    if (mol_dict[f.name]){
+                        mol_dict[f.name].push(f)
+                    } else {
+                        mol_dict[f.name] = [f]
+                    }
                 })
             }
+            Object.keys(mol_dict).forEach(key => {
+                const newMolecule = new Molecule ({name: key, files: mol_dict[key]})
+                newMolecule.save((err, savedMolecule) => {
+                    if (err) console.log(err);
+                    // console.log('molecule saved: ', savedMolecule);
+                    // res.send(savedMolecule)
+                }); 
+            });
+            return res.send(mol_dict);
         });
-        return res.json(mol_dict);
     });
     
     // ---------------- FILES ---------------------
@@ -106,7 +117,7 @@ module.exports = app => {
         })
     })
 
-    app.post('/playlist', (req, res) => {
+    app.post('/gen-playlist', (req, res) => {
         const curr_date = new Date();
         const newPlaylist = new Playlist({ displayInterval: 2000, name: 'newPlaylist', createdAt: curr_date, status: 'queued' });
         newPlaylist.save((err, savedPlaylist) => {

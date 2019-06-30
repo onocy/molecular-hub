@@ -40,9 +40,9 @@ const playlistSchema = new Schema ({
     status: {
         type: String
     }, 
-    // molecules: {
-    //     type: [moleculeSchema]
-    // }
+    molecules: {
+        type: [moleculeSchema]
+    }
 });
 
 
