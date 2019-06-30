@@ -71,7 +71,7 @@ class Sidebar extends Component {
             activeClassName={classes.activeListItem}
             className={classes.listItem}
             component={NavLink}
-            to="/products">
+            to="/login">
             <ListItemIcon className={classes.listItemIcon}>
               <ShoppingBasketIcon />
             </ListItemIcon>

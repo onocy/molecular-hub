@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Views
 import Dashboard from './views/Dashboard';
-import ProductList from './views/ProductList';
 import Account from './views/Account';
 import SignUp from './views/SignUp';
 import SignIn from './views/SignIn';
@@ -17,7 +16,6 @@ export default class Routes extends Component {
       <Switch>
         <Redirect exact from="/" to="/dashboard" />
         <Route component={Dashboard} exact path="/dashboard" />
-        <Route component={ProductList} exact path="/products" />
         <Route component={Account} exact path="/account" />
         <Route component={SignUp} exact path="/sign-up" />
         <Route component={SignIn} exact path="/sign-in" />

@@ -12,6 +12,11 @@ import { Grid } from '@material-ui/core';
 // Shared layouts
 import { Dashboard as DashboardLayout } from 'layouts';
 
+// Redux
+
+import { connect } from 'react-redux';
+import { getPlaylists, addPlaylist } from '../../../src/actions';
+
 // Custom components
 import {
   PlaylistTable
@@ -45,8 +50,26 @@ class Dashboard extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  playlists: state
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    addPlaylist: () => dispatch(addPlaylist), 
+    getPlaylist: () => dispatch(getPlaylists)
+  }
+};
+
+const PlaylistContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dashboard);
+
+
+
 Dashboard.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Dashboard);
+export default withStyles(styles)(PlaylistContainer);

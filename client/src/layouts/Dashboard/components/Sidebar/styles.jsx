@@ -49,11 +49,11 @@ export default theme => ({
   listItem: {
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: theme.palette.success.light,
-      borderLeft: `4px solid ${theme.palette.success.main}`,
+      backgroundColor: theme.palette.warning.light,
+      borderLeft: `4px solid ${theme.palette.warning.main}`,
       borderRadius: '4px',
       '& $listItemIcon': {
-        color: theme.palette.success.main,
+        color: theme.palette.warning.main,
         marginLeft: '-4px'
       }
     },
