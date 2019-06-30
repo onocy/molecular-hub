@@ -83,8 +83,8 @@ class PlaylistTable extends Component {
   async getPlaylists() {
     try {
       this.setState({ isLoading: true });
-      
       const { playlists, playlistsTotal } = await getPlaylists();
+      console.log('playlists', playlists)
       
       if (this.signal) {
         this.setState({
