@@ -46,3 +46,5 @@ class EditPlaylist extends Component {
     )
   }
 }
+
+export default EditPlaylist; 

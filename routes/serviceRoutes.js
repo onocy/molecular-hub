@@ -6,9 +6,25 @@ const { filewalker } = require('./helpers')
 
 module.exports = app => {
 
+    // ---------------- MOLECULES ---------------------  
+    
+    app.get('/gen-molecules', (req, res) => {
+        const mol_dict = {}
+        File.find({}, (err, file) => {
+            if (err) console.log(err);
+            else {
+                file.forEach(f => {
+                    console.log(f)
+                    mol_dict[f] = f
+                })
+            }
+        });
+        return res.json(mol_dict);
+    });
+    
     // ---------------- FILES ---------------------
 
-    app.get('/create-files', (req, res) => {
+    app.get('/gen-files', (req, res) => {
         filewalker('./assets/molecules', function (err, files) {
             if (err) {
                 throw err;
@@ -108,19 +124,5 @@ module.exports = app => {
         })
     });
 
-    // ---------------- MOLECULES ---------------------  
-    
-    
-    app.get('./create-molecules', (req, res) => {
-        const mol_dict = {}
-        File.find({}, (err, file) => {
-            if (err) console.log(err);
-            else {
-                file.forEach(f => {
-                    
-                })
-            }
-        });
-    });
 
 };

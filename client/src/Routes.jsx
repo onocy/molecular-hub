@@ -18,7 +18,6 @@ export default class Routes extends Component {
       <Switch>
         <Redirect exact from="/" to="/dashboard" />
         <Route component={Dashboard} exact path="/dashboard" />
-        <Route component={Test} exact path="/test" />
         <Route component={ProductList} exact path="/products" />
         <Route component={Account} exact path="/account" />
         <Route component={SignUp} exact path="/sign-up" />

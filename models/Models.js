@@ -4,11 +4,11 @@ const { Schema } = mongoose;
 
 
 const fileSchema = new Schema({
-    data: {
-        type: Buffer
-    },
     name: {
         type: String
+    },
+    data: {
+        type: Buffer
     },
     contentType: {
         type: String
