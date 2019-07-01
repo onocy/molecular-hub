@@ -11,7 +11,6 @@ import { withStyles } from '@material-ui/core';
 
 import { PlayArrow as PlayIcon, Edit } from '@material-ui/icons';
 
-
 // Material components
 import {
   Button,
@@ -20,7 +19,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
+  TableRow
 } from '@material-ui/core';
 
 // Shared services
@@ -33,7 +32,7 @@ import {
   PortletLabel,
   PortletToolbar,
   PortletContent,
-  Status, 
+  Status
 } from 'components';
 
 // Component styles
@@ -78,14 +77,13 @@ class PlaylistTable extends Component {
       }
     }
   }
-  
 
   async getPlaylists() {
     try {
       this.setState({ isLoading: true });
       const { playlists, playlistsTotal } = await getPlaylists();
-      console.log('playlists', playlists)
-      
+      console.log('playlists', playlists);
+
       if (this.signal) {
         this.setState({
           isLoading: false,
@@ -127,6 +125,7 @@ class PlaylistTable extends Component {
             subtitle={`${playlistsTotal} in total`}
             title="Playlists"
           />
+          <PortletLabel/>
           <PortletToolbar>
             <Button
               className={classes.newEntryButton}
@@ -149,8 +148,8 @@ class PlaylistTable extends Component {
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">Name</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
+                    <TableCell />
+                    <TableCell />
                     <TableCell align="left">Date Created</TableCell>
                     <TableCell align="left">Schedule Time</TableCell>
                     <TableCell align="left">Status</TableCell>
@@ -163,20 +162,22 @@ class PlaylistTable extends Component {
                         {order.name}
                       </TableCell>
                       <TableCell>
-                        <Button color = "default">
-                          <Edit/>
+                        <Button color="default">
+                          <Edit />
                         </Button>
                       </TableCell>
                       <TableCell>
-                        <Button color = "default">
-                          <PlayIcon style={{ color: 'green' }}/>
+                        <Button color="default">
+                          <PlayIcon style={{ color: 'green' }} />
                         </Button>
                       </TableCell>
                       <TableCell>
                         {moment(order.createdAt).format('DD/MM/YYYY')}
                       </TableCell>
                       <TableCell>
-                        {order.scheduleTime !== null ? moment(order.scheduleTime).format('DD/MM/YYYY') : 'N/A'}
+                        {order.scheduleTime !== null
+                          ? moment(order.scheduleTime).format('DD/MM/YYYY')
+                          : 'N/A'}
                       </TableCell>
                       <TableCell>
                         <div className={classes.statusWrapper}>

@@ -25,7 +25,7 @@ import {
 import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
 
 // Shared utilities
-import validators from 'common/validators';
+import validators from 'validators';
 
 // Component styles
 import styles from './styles';

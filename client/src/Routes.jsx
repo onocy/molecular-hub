@@ -9,13 +9,23 @@ import SignIn from './views/SignIn';
 import UnderDevelopment from './views/UnderDevelopment';
 import NotFound from './views/NotFound';
 
+function PrivateRoute({ component: Component, ...rest }) {
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        localStorage.getItem('isAuthenticated') ? (<Component {...props} />) : (<Redirect to= "/sign-in"/>)
+      }
+    />
+  );
+}
 
 export default class Routes extends Component {
   render() {
     return (
       <Switch>
-        <Redirect exact from="/" to="/dashboard" />
-        <Route component={Dashboard} exact path="/dashboard" />
+        <Redirect exact from="/" to="/sign-in" />
+        <PrivateRoute component={Dashboard} exact path="/dashboard" />
         <Route component={Account} exact path="/account" />
         <Route component={SignUp} exact path="/sign-up" />
         <Route component={SignIn} exact path="/sign-in" />

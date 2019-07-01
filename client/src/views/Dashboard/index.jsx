@@ -15,7 +15,7 @@ import { Dashboard as DashboardLayout } from 'layouts';
 // Redux
 
 import { connect } from 'react-redux';
-import { getPlaylists, addPlaylist } from '../../../src/actions';
+import { getPlaylists, addPlaylist } from 'actions';
 
 // Custom components
 import {
