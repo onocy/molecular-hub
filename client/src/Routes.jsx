@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 // Views
-import Dashboard from './views/Dashboard';
-import Account from './views/Account';
-import SignUp from './views/SignUp';
-import SignIn from './views/SignIn';
-import UnderDevelopment from './views/UnderDevelopment';
-import NotFound from './views/NotFound';
+import Dashboard from 'Dashboard';
+import Account from 'Account';
+import SignUp from 'SignUp';
+import SignIn from 'SignIn';
+import UnderDevelopment from 'UnderDevelopment';
+import NotFound from 'NotFound';
 
 function PrivateRoute({ component: Component, ...rest }) {
   return (

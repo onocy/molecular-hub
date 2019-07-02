@@ -35,8 +35,40 @@ import {
   Status
 } from 'components';
 
-// Component styles
-import styles from './styles';
+const styles = theme => ({
+  root: {},
+  portletContent: {
+    minWidth: '600px'
+  },
+  newEntryButton: {
+    marginLeft: theme.spacing.unit
+  },
+  progressWrapper: {
+    padding: theme.spacing.unit * 3,
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  tableRow: {
+    cursor: 'pointer'
+  },
+  customerCell: {
+    maxWidth: '200px',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    marginLeft: '20px',
+    fontWeight: 500
+  },
+  statusWrapper: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  status: {
+    marginRight: theme.spacing.unit
+  },
+ 
+});
+
 
 const statusColors = {
   playing: 'success',
