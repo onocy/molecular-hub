@@ -45,8 +45,6 @@ const styles = theme => ({
   }
 });
 
-
-
 const states = [
   {
     value: 'alabama',

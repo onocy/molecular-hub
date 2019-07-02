@@ -9,6 +9,9 @@ import PropTypes from 'prop-types';
 // Material helpers
 import { withStyles } from '@material-ui/core';
 
+// Custom components
+import NotificationList from './NotificationList';
+
 // Material components
 import {
   Badge,
@@ -26,11 +29,39 @@ import {
   Input as InputIcon
 } from '@material-ui/icons';
 
-// Shared services
-import { getNotifications } from 'services/notification';
+const notifications = [{
+  id: 'DEV716627',
+  title: 'New playlist has been added',
+  when: '2 hours ago',
+  type: 'playlistAdd',
+  to: '/orders/DEV730658'
+},
+{
+  id: 'DEV853890',
+  title: 'New molecule has been added',
+  when: '3 hours ago',
+  type: 'molecule',
+  to: '/users/DEV696649'
+},
+{
+  id: 'DEV897704',
+  title: 'Playlist has been triggered',
+  when: '1 day ago',
+  type: 'playlist',
+  to: '/products/DEV654476'
+}
+];
 
-// Custom components
-import NotificationList from './NotificationList';
+const getNotifications = (limit = 6) => {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve({
+        notifications: notifications.slice(0, limit),
+        notificationsCount: notifications.length
+      });
+    }, 700);
+  });
+};
 
 const styles = theme => ({
   root: {
@@ -58,7 +89,6 @@ const styles = theme => ({
     marginLeft: theme.spacing.unit
   }
 });
-
 
 class Topbar extends Component {
   signal = true;

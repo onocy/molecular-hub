@@ -13,8 +13,8 @@ import { Drawer } from '@material-ui/core';
 
 // Custom components
 import Sidebar from './SideBar';
-import Topbar from 'TopBar';
-import Footer from 'Footer';
+import Topbar from './TopBar';
+import Footer from './Footer';
 
 
 const styles = theme => ({

@@ -22,9 +22,6 @@ import {
   TableRow
 } from '@material-ui/core';
 
-// Shared services
-import { getPlaylists, newPlaylist } from 'services/playlist';
-
 // Shared components
 import {
   Portlet,
@@ -34,6 +31,20 @@ import {
   PortletContent,
   Status
 } from 'components';
+
+const getPlaylists = async () => {
+  const playlists = await fetch('/playlists');
+  const result = await playlists.json();
+  return ({
+    playlists: result,
+    playlistsTotal: result.length
+  });
+};
+
+const newPlaylist = async () => {
+  const playlists = await fetch('/gen-playlist', {method: 'POST'});
+  console.log(playlists);
+};
 
 const styles = theme => ({
   root: {},
