@@ -3,6 +3,10 @@ const path = require('path');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 
+
+// ------------------------------ HELPERS ----------------------------------------------
+
+
 const filewalker = (dir, done) => {
     let results = [];    
     fs.readdir(dir, function(err, list) {
@@ -26,6 +30,9 @@ const filewalker = (dir, done) => {
         });
     });
 };
+
+
+// --------------------------------- AUTH -------------------------------------------
 
 const authRoutes = app => {
 
@@ -86,6 +93,9 @@ const authRoutes = app => {
         })
     }); 
 };
+
+// --------------------------------- SERVICE -------------------------------------------
+
 
 const serviceRoutes = app => {
 
@@ -219,7 +229,22 @@ const serviceRoutes = app => {
     });
 };
 
+// ------------------------------------ INSTALLATION ----------------------------------------
+
+
+const installationRoutes = app => {
+    app.get('/current', (req, res) => {
+        const key = '123';
+        if (req.body.key == key){
+            res.send('This is where the current playlist will be sent out after a lookup is performed in the database for the current users current molecule')
+        } else {
+            res.send('This is an incorrect key. Please connect with the Molecular Hub to receive the key associated with your account.')
+        }
+    });
+}
+
 module.exports = {
+    installationRoutes,
     serviceRoutes, 
     authRoutes
 }
