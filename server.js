@@ -27,8 +27,7 @@ app.use(session({
 }));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-require('./routes/serviceRoutes')(app);
-require('./routes/authRoutes')(app);
+require('routes')(app);
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));
