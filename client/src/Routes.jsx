@@ -25,7 +25,7 @@ export default class Routes extends Component {
     return (
       <Switch>
         <Redirect exact from="/" to="/sign-in" />
-        <PrivateRoute component={Dashboard} exact path="/dashboard" />
+        <Route component={Dashboard} exact path="/dashboard" />
         <Route component={Account} exact path="/account" />
         <Route component={SignUp} exact path="/sign-up" />
         <Route component={SignIn} exact path="/sign-in" />

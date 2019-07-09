@@ -9,6 +9,7 @@ const app = express();
 
 const port = process.env.PORT || 3001;
 
+
 mongoose.connect(keys.mongoURI, { useNewUrlParser: true }).then(console.log('dbconnected'));
 
 app.use(require('cookie-parser')());
@@ -25,9 +26,10 @@ app.use(session({
         secure: process.env.NODE_ENV === 'production'
     }
 }));
-app.use(express.static(path.join(__dirname, 'client/build')));
 
-require('routes')(app);
+require('./routes')(app);
+
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client/build', 'index.html'));

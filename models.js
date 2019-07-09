@@ -22,7 +22,7 @@ const molecule = new Schema ({
         type: String
     },
     files: {
-        type: [fileSchema]
+        type: [file]
     }
 })
 
@@ -40,7 +40,7 @@ const playlist = new Schema ({
         type: String
     }, 
     molecules: {
-        type: [moleculeSchema]
+        type: [molecule]
     }
 });
 
@@ -61,7 +61,7 @@ const user = new Schema ({
         type: String, 
     }, 
     playlists: {
-        type: [playlistSchema]
+        type: [playlist]
     }
 });
 

@@ -13,7 +13,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import './assets/scss/index.scss';
 
 // Routes
-import Routes from './Routes';
+import Routes from 'Routes';
 
 // Browser history
 const browserHistory = createBrowserHistory();
