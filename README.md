@@ -9,4 +9,4 @@ No complicated screen sharing process is needed to configure the molecule presen
 Once the installation application is configured with the unique Hub key associated with their account, the application is able to control what the Playground shows.
 
 
-:copyright: onocy
+onocy

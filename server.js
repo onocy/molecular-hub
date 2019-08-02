@@ -19,7 +19,7 @@ app.use(session({
     name: 'sid',
     saveUninitialized: false,
     resave: false,
-    secret: 'This is where the \*super\* secret secret goes.',
+    secret: 'This is where the secret goes.',
     cookie: {
         maxAge: 1000 * 60 * 60 * 2,
         sameSite: true,
