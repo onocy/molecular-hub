@@ -1,4 +1,4 @@
-# Molecular Hub :microscope: :satellite:
+# Molecular Hub
 
 > This UI allows for control of the playground through adjustable scheduling of editable playlists of molecules.
 
@@ -7,6 +7,3 @@ By using this application, an installation owner can determine the order of mole
 
 No complicated screen sharing process is needed to configure the molecule presentation order-
 Once the installation application is configured with the unique Hub key associated with their account, the application is able to control what the Playground shows.
-
-
-onocy
