@@ -13,7 +13,6 @@ import { Grid } from '@material-ui/core';
 import { Dashboard } from 'Dashboard';
 
 // Redux
-
 import { connect } from 'react-redux';
 import { getPlaylists, addPlaylist } from 'actions';
 

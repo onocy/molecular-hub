@@ -9,9 +9,8 @@ const app = express();
 
 const port = process.env.PORT || 3001;
 
-
-mongoose.connect(keys.mongoURI, { useNewUrlParser: true }).then(console.log('dbconnected'));
-
+mongoose.connect(keys.mongoURI, { useNewUrlParser: true }).catch(error => console.log(error));
+    
 app.use(require('cookie-parser')());
 app.use(require('body-parser').json());
 app.use(session({

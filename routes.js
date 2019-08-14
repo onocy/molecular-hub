@@ -1,4 +1,9 @@
-const { File, Molecule, Playlist, User } = require('./models');
+const Notification = require('./models/notification');
+const File = require('./models/file');
+const Molecule = require('./models/molecule');
+const Playlist = require('./models/playlist');
+const User = require('./models/user');
+
 const { filewalker } = require('./helpers');
 const path = require('path');
 const fs = require('fs');
@@ -8,15 +13,6 @@ const bcrypt = require('bcrypt');
 // --------------------------------- AUTH -------------------------------------------
 
 module.exports = function(app) {
-
-
-/**
- * Test the server to see if online on proper port.
- */
-    app.get('/0', (req, res) => {
-        res.json('Server is working.')
-    });
-
     
 /** 
  * Sign up - parameters sent via request body.
@@ -215,7 +211,8 @@ module.exports = function(app) {
     
 
 /**
- * 
+ * Return a single playlist with a given ID
+ * @param {string} id 
  */
     app.get('/playlist', (req, res) => {
         Playlist.find({_id: req.body.id}, (err, playlist) => {
@@ -224,6 +221,18 @@ module.exports = function(app) {
             else { res.status(404).json('Not Found')}
         })
     })
+
+/**
+ * Deletes a playlist with a given ID
+ * @param {string} id
+ */
+    app.delete('/playlist', (req, res) => {
+        console.log('attempting delete')
+        Playlist.remove({ _id: req.body.id }, (err, playlists) => {
+            if (err) console.log(err);
+            res.status(200).send('Removed');
+        })
+    });
 
 /**
  * Returns all playlists within the DB. 
@@ -253,17 +262,6 @@ module.exports = function(app) {
         })
     });
 
-/**
- * @param {string} id The id of the playlist to be deleted
- */
-    app.delete('/playlist', (req, res) => {
-        console.log('attempting delete')
-        Playlist.remove({ _id: req.body.id }, (err, playlists) => {
-            if (err) console.log(err);
-            res.status(200).send('Removed');
-        })
-    });
-
     // ------ INSTALLATION --- 
 
 /**
@@ -280,5 +278,12 @@ module.exports = function(app) {
         } catch (error) {
             res.json(`Key: ${key}, Error: ${error}`)
         }
+    });
+
+/**
+ * Test the server to see if online on proper port.
+ */
+    app.get('/0', (req, res) => {
+        res.json('Server is working.')
     });
 };
