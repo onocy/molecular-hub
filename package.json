@@ -22,7 +22,7 @@
     "nodemon": "^1.19.1"
   },
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
     "connect-mongo": "^3.0.0",
     "cookie-parser": "^1.4.4",
